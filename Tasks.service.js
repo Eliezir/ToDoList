@@ -1,16 +1,11 @@
 let tasksList = [
-    {id:0, titulo:"EU", grupo:"aulas"},
-    {id:1, titulo:"NÃO", grupo:"aulas"},
-    {id:2, titulo:"SOU", grupo:"aulas1"},
-    {id:3, titulo:"SENHOR", grupo:"aulas1"},
-    {id:4, titulo:"DO", grupo:"trabalho"},
-    {id:5, titulo:"TEMPO", grupo:"trabalho"},
-    {id:6, titulo:"MAS", grupo:"trabalho"},
-    {id:7, titulo:"SEI", grupo:"trabalho"},
-    {id:8, titulo:"QUE", grupo:"trabalho"},
-    {id:9, titulo:"VAI", grupo:"aulas"},
-    {id:10, titulo:"CHOVER", grupo:"aulas"}
-
+    { status:"Active" ,titulo:"Estudar redação", grupo:"ENEM"},
+    { status:"Active" ,titulo:"Estudar flatList", grupo:"Monitoria"},
+    { status:"Active" ,titulo:"Estudar espanhol", grupo:"IFAL"},
+    { status:"Active" ,titulo:"Comprar pasta de dente", grupo:"feira"},
+    { status:"Active" ,titulo:"Comprar queijo", grupo:"feira"},
+    { status:"Active" ,titulo:"Trabalho do Leonardo", grupo:"IFAL"},
+    { status:"Active" ,titulo:"Atualizar ícones do menu WEB1", grupo:"IFAL"},
 ];
 
 

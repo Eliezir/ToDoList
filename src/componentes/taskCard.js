@@ -5,7 +5,10 @@ export default function componentes(props) {
  return (
     <View key={props.id} style={styles.taskCard}>
     <TouchableOpacity onPress={() => props.function(props.functionIndex)}style={styles.check}></TouchableOpacity>
-    <Text style={styles.taskTittle}>{props.titulo}</Text>
+    <View>
+    <Text style={styles.taskTittle}>{props.data.titulo}</Text>
+    <Text style={styles.taskGroup}>{props.data.grupo}</Text>
+    </View>
     </View>
   );
 }
@@ -13,7 +16,8 @@ export default function componentes(props) {
 const styles = StyleSheet.create({
 taskCard:{
     width:"80%",
-    height:50,
+    marginLeft:"10%",
+    height:70,
     backgroundColor:"#242424",
     margin:10,
     borderRadius:10,
@@ -25,6 +29,10 @@ taskCard:{
     color:'white',
     fontSize:15,
     fontWeight:'bold'
+  },
+  taskGroup: {
+    color:'rgba(255,255,255,0.5)',
+    fontSize:12,
   },
   check:{
     height:15,
