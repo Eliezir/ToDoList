@@ -12,16 +12,20 @@ export default function CreateTask() {
   const[lista,setLista] = useState(null)
 
   const addTask = () =>{
-  tasksList.push(
-    {
-    status:"Active", titulo:titulo, grupo:lista}
-)
-      
-if(grupos.every((group)=>{return !(group.label.toLowerCase() === lista.toLowerCase())})){
+  if(grupos.every((group)=>{return !(group.label.toLowerCase() === lista.toLowerCase())})){
   grupos.push({label:lista, value: lista})
+  tasksList.push({tatus:"Active", titulo:titulo, grupo:lista})
+  }
+else{
+  let index = grupos.map(g => g.label.toLowerCase()).indexOf(lista.toLowerCase())
+  tasksList.push({tatus:"Active", titulo:titulo, grupo:grupos[index].label})
+}
+
+      
+
       
   }
-}
+
 
 
   const navigation = useNavigation();
