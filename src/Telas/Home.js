@@ -64,9 +64,10 @@ export default function Home() {
   const pass = () => { }
 
   const checked = (item) => {
+    item.status ='done'
     var index = tasksList.map(g => g.titulo).indexOf(item.titulo)
     let deletedGroup = tasksList[index].grupo
-    tasksList.splice(index, 1)
+   tasksList.splice(index, 1) 
     const newTask = [...tasksList]
     setTasks(newTask)
     if (filter == true) {
@@ -96,7 +97,7 @@ export default function Home() {
         <TextInput style={styles.headerInput} placeholder="Pesquisar" placeholderTextColor="rgba(255,255,255,0.6)" selectionColor="#ffff" value={search} onChangeText={setSearch} />
         <Icon style={[styles.arrowIcon, { display: search == "" ? 'none' : 'flex' }]} name="x" size={20} color={"#ffff"} onPress={() => setSearch("")} />
       </View>
-      <FlatList style={{ width: "100%", alignContent: "center" }} data={tasks} renderItem={({ item, index }) => <TaskCard data={item} function={checked} functionIndex={item} key={index} />}>
+      <FlatList style={{ width: "100%", alignContent: "center" }} data={tasks} renderItem={({ item, index }) => <TaskCard data={item} function={checked} functionIndex={item} key={index}/>}>
       </FlatList>
       <AbsoluteButton func={pass} navigate={'Create'} simbol={"+"} />
     </SafeAreaView>

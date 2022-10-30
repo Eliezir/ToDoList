@@ -18,7 +18,7 @@ export default function StyledInput(props) {
   
  return (
     <View style={styles.container}>
- <Text style={styles.inputLabel}>{props.textoLabel}</Text>
+
       <TextInput onFocus={customOnFocus} onChangeText={props.set} value={props.variable} onBlur={customOnBlur} style={[styles.inputText,{borderColor:inputBorderColor}]} placeholder={props.placeHolder} placeholderTextColor="rgba(255,255,255,0.6)" selectionColor="#7442d8"  />
    </View>
   );
@@ -38,12 +38,5 @@ const styles = StyleSheet.create({
         paddingLeft:0,
         margin:0,
       },
-      inputLabel: {
-        color:'white',
-        margin:0,
-        marginTop:50,
-        fontWeight:'Bold',
-        marginBottom:10,
-        fontSize:20,
-      }
+   
 });

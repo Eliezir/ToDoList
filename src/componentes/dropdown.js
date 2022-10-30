@@ -4,11 +4,11 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 
 export const grupos = [
-{ label: 'Todas as listas', value: 'Todas as listas' },
-  { label: 'ENEM', value: 'ENEM' },
-  { label: 'IFAL', value: 'IFAL' },
-  { label: 'feira', value: 'feira' },
-  { label: 'Monitoria', value: 'Monitoria' },
+  { key:1 ,label: 'Todas as listas', value: 'Todas as listas' },
+  { key:2 ,label: 'ENEM', value: 'ENEM' },
+  { key:3 ,label: 'IFAL', value: 'IFAL' },
+  { key:4 ,label: 'feira', value: 'feira' },
+  { key:5 ,label: 'Monitoria', value: 'Monitoria' },
 ];
 
 export default function DropdownComponent (props){
@@ -27,7 +27,7 @@ export default function DropdownComponent (props){
         data={grupos}
         search
         maxHeight={300}
-        labelField="label"
+        labelField="key:1 ,label"
         valueField="value"
         placeholder={!isFocus ? 'Todas as listas' : '...'}
         searchPlaceholder="Pesquisar..."

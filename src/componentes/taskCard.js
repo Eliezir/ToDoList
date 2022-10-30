@@ -1,10 +1,13 @@
 import React from 'react';
 import { View,TouchableOpacity,Text,StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 export default function componentes(props) {
  return (
     <View key={props.id} style={styles.taskCard}>
-    <TouchableOpacity onPress={() => props.function(props.functionIndex)}style={styles.check}></TouchableOpacity>
+    <TouchableOpacity onPress={() => props.function(props.functionIndex)}style={styles.check}>
+    <Icon style={{display: props.data.status == 'done' ? 'flex': 'none'}}name="check" size={15} color={"green"}/>
+    </TouchableOpacity>
     <View>
     <Text style={styles.taskTittle}>{props.data.titulo}</Text>
     <Text style={styles.taskGroup}>{props.data.grupo}</Text>
@@ -35,12 +38,14 @@ taskCard:{
     fontSize:12,
   },
   check:{
-    height:15,
-    width:15,
-    border:"solid 2px grey",
+    height:20,
+    width:20,
+    borderColor:'grey',
+    borderWidth:1,
     borderRadius:3,
     marginLeft:15,
     marginRight:15,
-    backgroundColor:"#121212"
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
