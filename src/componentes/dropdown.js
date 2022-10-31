@@ -11,6 +11,8 @@ export const grupos = [
   { key:5 ,label: 'Monitoria', value: 'Monitoria' },
 ];
 
+
+
 export default function DropdownComponent (props){
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
@@ -27,7 +29,7 @@ export default function DropdownComponent (props){
         data={grupos}
         search
         maxHeight={300}
-        labelField="key:1 ,label"
+        labelField="label"
         valueField="value"
         placeholder={!isFocus ? 'Todas as listas' : '...'}
         searchPlaceholder="Pesquisar..."
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     marginLeft:'10%',
     width:200,
     height: 50,
-    color:'white',
+    color:'black',
   },
   icon: {
     marginRight: 5,
@@ -81,6 +83,7 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+    color:'green'
   },
 });
 

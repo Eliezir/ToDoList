@@ -8,6 +8,7 @@ import AbsoluteButton from '../componentes/absoluteButton';
 import tasksList from '../../Tasks.service'
 import { grupos } from '../componentes/dropdown'
 import { Picker, PickerIOS } from '@react-native-picker/picker';
+import ModalConteudo from '../componentes/modal'
 
 export default function CreateTask() {
   const [titulo, setTitulo] = useState(null)
@@ -17,20 +18,30 @@ export default function CreateTask() {
   const addTask = () => {
     if (grupos.every((group) => { return !(group.label.toLowerCase() === lista.toLowerCase()) })) {
       grupos.push({ label: lista, value: lista })
-      tasksList.push({ tatus: "Active", titulo: titulo, grupo: lista })
+      tasksList.push({ status: "Active", titulo: titulo, grupo: lista })
     }
     else {
       let index = grupos.map(g => g.label.toLowerCase()).indexOf(lista.toLowerCase())
-      tasksList.push({ tatus: "Active", titulo: titulo, grupo: grupos[index].label })
+      tasksList.push({ status: "Active", titulo: titulo, grupo: grupos[index].label })
     }
   }
-  let gruposShow = grupos
+  let gruposShow = [...grupos]
   gruposShow[0].label == 'Todas as listas' ? gruposShow.splice(0, 1) : {};
 
   let gruposItem = gruposShow.map((g, k) => {
     var nome = g.label;
     return <Picker.Item key={k} value={g.label} label={g.label} />
   })
+
+  const addList = () =>{
+    if (grupos.every((group) => { return !(group.label.toLowerCase() === lista.toLowerCase()) })) {
+      grupos.push({ key:grupos.length + 1 ,label: lista, value: lista })
+    }
+    else {
+      let index = grupos.map(g => g.label.toLowerCase()).indexOf(lista.toLowerCase())
+      setLista(grupos[index].label)
+    }
+  }
 
 
   const navigation = useNavigation();
@@ -44,14 +55,16 @@ export default function CreateTask() {
       <View style={styles.main}>
       <Text style={styles.inputLabel}>O que tem para ser feito?</Text>
         <StyledInput set={setTitulo} placeHolder='Insira a tarefa aqui' />
-        {/*  <StyledInput set={setLista} textoLabel='Adicionar a lista' placeHolder='Default'/> */}
         <Text style={styles.inputLabel}>Adicionar a lista</Text>
         <View style={styles.listaInput}>
         <Picker dropdownIconColor={'#ffff'} style={styles.picker} selectedValue={lista} onValueChange={(itemValue) => setLista(itemValue)}>
           {gruposItem}
         </Picker>
-        <IconList name="playlist-plus" size={25} color={"#ffff"} />
+        <IconList name="playlist-plus" size={25} color={"#ffff"} onPress={()=> setModalVisible(true) } />
         </View>
+        <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <ModalConteudo inputLabel={styles.inputLabel}set={setLista} fechar={() => setModalVisible(false)} add={()=>{[addList(), setModalVisible(false)]}}/>
+        </Modal>
       </View>
       <AbsoluteButton func={addTask} navigate={'Home'} simbol={<Icon name="check" size={25} />} />
     </SafeAreaView>
