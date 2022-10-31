@@ -6,7 +6,7 @@ export default function componentes(props) {
  return (
     <View key={props.id} style={styles.taskCard}>
     <TouchableOpacity onPress={() => props.function(props.functionIndex)}style={styles.check}>
-    <Icon style={{display: props.data.status == 'done' ? 'flex': 'none'}}name="check" size={15} color={"green"}/>
+    <Icon style={{display: props.data.status == 'done' ? 'flex': 'none'}}name="check" size={18} color={"green"}/>
     </TouchableOpacity>
     <View>
     <Text style={styles.taskTittle}>{props.data.titulo}</Text>

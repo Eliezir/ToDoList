@@ -67,8 +67,13 @@ export default function Home() {
     item.status ='done'
     var index = tasksList.map(g => g.titulo).indexOf(item.titulo)
     let deletedGroup = tasksList[index].grupo
-   tasksList.splice(index, 1) 
-    const newTask = [...tasksList]
+    setTimeout(()=>{
+      tasksList.splice(index, 1)
+      newTask = [...tasksList]
+      setTasks(newTask)
+    },1000)
+  
+    let newTask = [...tasksList]
     setTasks(newTask)
     if (filter == true) {
       filterList(filtro)
