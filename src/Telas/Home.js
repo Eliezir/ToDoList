@@ -10,14 +10,43 @@ import { useIsFocused } from "@react-navigation/native";
 import { grupos } from '../componentes/dropdown'
 var filtro;
 
-
 export default function Home() {
-  const [tasks, setTasks] = useState([...tasksList])
+  let [loadTask,setLoadTask] = useState(0);
+  const [tasks, setTasks] = useState()
   const [header, setHeader] = useState("Home")
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState(false)
 
+const getTasks = () =>{
+ 
+}
 
+  const deleteTask = (task) => {
+    var formdata = new FormData();
+    var requestOptions = {
+      method: 'DELETE',
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch(`http://localhost:3000/tasks/${task}`, requestOptions)
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+      setLoadTask(loadTask+=1)
+  }
+
+
+  useEffect(() => {
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+    fetch("http://localhost:3000/tasks", requestOptions)
+      .then(response => response.json())
+      .then(result => setTasks([...result]))
+      .catch(error => console.log('error', error))
+  }, [loadTask])
 
   const isFocused = useIsFocused();
   useEffect(() => {
@@ -63,16 +92,15 @@ export default function Home() {
 
   const pass = () => { }
 
-  const checked = (item) => {
-    item.status ='done'
+  /* const checked = (item) => {
+    item.status = 'done'
     var index = tasksList.map(g => g.titulo).indexOf(item.titulo)
     let deletedGroup = tasksList[index].grupo
-    setTimeout(()=>{
-      tasksList.splice(index, 1)
-      newTask = [...tasksList]
-      setTasks(newTask)
-    },1000)
-  
+    setTimeout(() => {
+      deleteTask(index)
+      getTasks();
+    }, 1000)
+
     let newTask = [...tasksList]
     setTasks(newTask)
     if (filter == true) {
@@ -84,6 +112,10 @@ export default function Home() {
     if (!teste) {
       grupos.splice(grupos.map(g => g.label).indexOf(deletedGroup), 1)
     }
+  } */
+
+  const checked = (index) =>{
+    deleteTask(index)
   }
 
   const navigation = useNavigation();
@@ -102,7 +134,7 @@ export default function Home() {
         <TextInput style={styles.headerInput} placeholder="Pesquisar" placeholderTextColor="rgba(255,255,255,0.6)" selectionColor="#ffff" value={search} onChangeText={setSearch} />
         <Icon style={[styles.arrowIcon, { display: search == "" ? 'none' : 'flex' }]} name="x" size={20} color={"#ffff"} onPress={() => setSearch("")} />
       </View>
-      <FlatList style={{ width: "100%", alignContent: "center" }} data={tasks} renderItem={({ item, index }) => <TaskCard data={item} function={checked} functionIndex={item} key={index}/>}>
+      <FlatList style={{ width: "100%", alignContent: "center" }} data={tasks} renderItem={({ item, index }) => <TaskCard data={item} function={checked} functionIndex={item.id} key={index} />}>
       </FlatList>
       <AbsoluteButton func={pass} navigate={'Create'} simbol={"+"} />
     </SafeAreaView>

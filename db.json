@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "status": "Active",
+      "titulo": "Estudar redação",
+      "grupo": "ENEM"
+    },
+    {
+      "id": 2,
+      "status": "Active",
+      "titulo": "Estudar flatList",
+      "grupo": "Monitoria"
+    },
+    {
+      "id": 3,
+      "status": "Active",
+      "titulo": "Estudar espanhol",
+      "grupo": "IFAL"
+    },
+    {
+      "id": 7,
+      "status": "Active",
+      "titulo": "Atualizar ícones do menu WEB1",
+      "grupo": "IFAL"
+    }
+  ]
+}
