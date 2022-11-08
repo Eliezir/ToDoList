@@ -17,9 +17,24 @@ export default function Home() {
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState(false)
 
-const getTasks = () =>{
- 
-}
+
+
+  const updateTask = (task) =>{
+    fetch(`http://localhost:3000/tasks/${task}`, {
+  method: 'PATCH',
+  body: JSON.stringify({
+   status:'done'
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+  .catch(error => console.log('error', error)); 
+  setLoadTask(loadTask+=1)
+  }
+
+
+
 
   const deleteTask = (task) => {
     var formdata = new FormData();
@@ -28,10 +43,7 @@ const getTasks = () =>{
       body: formdata,
       redirect: 'follow'
     };
-
     fetch(`http://localhost:3000/tasks/${task}`, requestOptions)
-      .then(response => response.json())
-      .then(result => console.log(result))
       .catch(error => console.log('error', error));
       setLoadTask(loadTask+=1)
   }
@@ -51,7 +63,7 @@ const getTasks = () =>{
   const isFocused = useIsFocused();
   useEffect(() => {
     if (isFocused) {
-      setTasks([...tasksList]);
+      setLoadTask(loadTask+=1)
       setHeader("Home")
       setSearch("")
     }
@@ -115,7 +127,17 @@ const getTasks = () =>{
   } */
 
   const checked = (index) =>{
-    deleteTask(index)
+    updateTask(index)
+    setTimeout(() => {deleteTask(index)},1000)
+    if (filter == true) {
+      filterList(filtro)
+    }
+    const teste = tasksList.some((task) => {
+      return task.grupo == deletedGroup
+    })
+    if (!teste) {
+      grupos.splice(grupos.map(g => g.label).indexOf(deletedGroup), 1)
+    }
   }
 
   const navigation = useNavigation();

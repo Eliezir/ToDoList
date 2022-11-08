@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
 
 export const grupos = [
-  { key:1 ,label: 'Todas as listas', value: 'Todas as listas' },
-  { key:2 ,label: 'ENEM', value: 'ENEM' },
-  { key:3 ,label: 'IFAL', value: 'IFAL' },
-  { key:4 ,label: 'feira', value: 'feira' },
-  { key:5 ,label: 'Monitoria', value: 'Monitoria' },
+
 ];
 
+const setGrupos = () =>{
+  var requestOptions = {
+    method: 'GET',
+    redirect: 'follow'
+  };
+  fetch("http://localhost:3000/tasks", requestOptions)
+    .then(response => response.json())
+    .then(result => result.map((task)=>{
+      grupos.forEach((grupo)=>{
+        console.log("teste")
+        if(grupo.label == task.grupo){
+          console.log('igual')
+          return
+        }
+        grupos.push({
+          key:grupos.length, label:task.grupo, value:task.grupo
+        })
+      })
+    }))
+    .catch(error => console.log('error', error))
+}
 
 
 export default function DropdownComponent (props){
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-
+  useEffect(()=>{
+    setGrupos();
+    console.log(grupos)
+  },[])
   return (
     <View style={styles.container}>
  

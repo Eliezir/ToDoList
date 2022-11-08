@@ -14,15 +14,34 @@ export default function CreateTask() {
   const [titulo, setTitulo] = useState(null)
   const [lista, setLista] = useState('Default')
   const [modalVisible, setModalVisible] = useState(false)
+  const [id] = useState()
+
+  const postTask = (grupo) =>{
+    fetch('http://localhost:3000/tasks', {
+    method: 'POST',
+  body: JSON.stringify({
+  id:id,
+  status:"Active",
+  titulo:titulo,
+  grupo:grupo,
+}),
+headers: {
+  'Content-type': 'application/json; charset=UTF-8',
+},
+})
+  }
+
+
 
   const addTask = () => {
     if (grupos.every((group) => { return !(group.label.toLowerCase() === lista.toLowerCase()) })) {
       grupos.push({ label: lista, value: lista })
-      tasksList.push({ status: "Active", titulo: titulo, grupo: lista })
+      postTask(lista)
     }
     else {
       let index = grupos.map(g => g.label.toLowerCase()).indexOf(lista.toLowerCase())
       tasksList.push({ status: "Active", titulo: titulo, grupo: grupos[index].label })
+      postTask(grupos[index].label)
     }
   }
   let gruposShow = [...grupos]
