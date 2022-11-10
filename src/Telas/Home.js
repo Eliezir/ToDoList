@@ -44,11 +44,12 @@ export default function Home() {
       body: formdata,
       redirect: 'follow'
     };
-    fetch(`http://localhost:3000/tasks/${task}`, requestOptions)
+       fetch(`http://localhost:3000/tasks/${task}`, requestOptions)
+       .then()
       .catch(error => console.log('error', error));
-    setLoadTask(loadTask += 1)
-    console.log('setou')
-  }
+     setLoadTask(loadTask += 1)  
+    console.log(tasks)
+}
   useEffect(() => {
     var requestOptions = {
       method: 'GET',
@@ -89,23 +90,22 @@ export default function Home() {
   }
 
 /* pesquisar por grupos */
-  const filterList = (filter) => {
-    filtro = filter;
+  const filterList = (filtrar) => {
+    filtro = filtrar;
     var filteredTasks = []
-    if (filter == 'Todas as listas') {
+    if (filtrar == 'Todas as listas') {
       filteredTasks = [...tasksList]
       setFilter(false)
     }
     else {
       setFilter(true)
       tasksList.forEach((task) => {
-        if (task.grupo == filter) {
+        if (task.grupo == filtrar) {
           filteredTasks.push(task)
         }
       })
     }
     setTasks(filteredTasks)
-
   }
 
   const pass = () => { }
@@ -121,16 +121,14 @@ export default function Home() {
         filterList(filtro)
       }
     },1000)
-    async () => { setTimeout(() => {  
+    setTimeout(() => {  
     const teste = tasksList.some((task) => {
       return task.grupo == deletedGroup
     })
-    console.log(tasksList)
     if (!teste) {
       grupos.splice(grupos.map(g => g.label).indexOf(deletedGroup), 1)
     }
-  }, 2000)}
- 
+  }, 2000)
   }
 
 /* grupos para o dropdown */
@@ -161,7 +159,7 @@ tasksList.map((task) => {
       </View>
       <FlatList style={{ width: "100%", alignContent: "center" }} data={tasks} renderItem={({ item, index }) => <TaskCard data={item} function={checked} functionIndex={item} key={index} />}>
       </FlatList>
-      <AbsoluteButton func={pass} navigate={'Create'} simbol={"+"} />
+      <AbsoluteButton func={()=>navigation.navigate('Create')} /* navigate={'Create'}  */simbol={"+"} />
     </SafeAreaView>
   );
 }

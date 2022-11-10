@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function AbsoluteButton(props) {
     const navigation = useNavigation();
  return (
-    <TouchableOpacity onPress={() => {navigation.navigate(props.navigate);props.func()}} style={styles.btnCreateComentario}>
+    <TouchableOpacity onPress={() => {props.func()}} style={styles.btnCreateComentario}>
     <Text style={styles.btnCreateComentarioTxt}>{props.simbol}</Text>
   </TouchableOpacity>
   );

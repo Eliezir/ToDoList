@@ -11,37 +11,40 @@ import { Picker, PickerIOS } from '@react-native-picker/picker';
 import ModalConteudo from '../componentes/modal'
 
 export default function CreateTask() {
+  const navigation = useNavigation();
   const [titulo, setTitulo] = useState(null)
   const [lista, setLista] = useState('Default')
   const [modalVisible, setModalVisible] = useState(false)
   const [id] = useState()
 
-  const postTask = (grupo) =>{
-    fetch('http://localhost:3000/tasks', {
-    method: 'POST',
-  body: JSON.stringify({
-  id:id,
-  status:"Active",
-  titulo:titulo,
-  grupo:grupo,
-}),
-headers: {
-  'Content-type': 'application/json; charset=UTF-8',
-},
-})
+  async function postTask(grupo) {
+    await fetch('http://localhost:3000/tasks', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id,
+        status: "Active",
+        titulo: titulo,
+        grupo: grupo,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    })
   }
 
 
 
-  const addTask = () => {
+  async function addTask  () {
     if (grupos.every((group) => { return !(group.label.toLowerCase() === lista.toLowerCase()) })) {
       grupos.push({ label: lista, value: lista })
-      postTask(lista)
+      await postTask(lista)
+      navigation.navigate('Home')
     }
     else {
       let index = grupos.map(g => g.label.toLowerCase()).indexOf(lista.toLowerCase())
       tasksList.push({ status: "Active", titulo: titulo, grupo: grupos[index].label })
-      postTask(grupos[index].label)
+      await postTask(grupos[index].label)
+      navigation.navigate('Home')
     }
   }
   let gruposShow = [...grupos]
@@ -52,9 +55,9 @@ headers: {
     return <Picker.Item key={k} value={g.label} label={g.label} />
   })
 
-  const addList = () =>{
+  const addList = () => {
     if (grupos.every((group) => { return !(group.label.toLowerCase() === lista.toLowerCase()) })) {
-      grupos.push({ key:grupos.length + 1 ,label: lista, value: lista })
+      grupos.push({ key: grupos.length + 1, label: lista, value: lista })
     }
     else {
       let index = grupos.map(g => g.label.toLowerCase()).indexOf(lista.toLowerCase())
@@ -63,7 +66,7 @@ headers: {
   }
 
 
-  const navigation = useNavigation();
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,20 +76,20 @@ headers: {
         <Text style={styles.headerTitle}>New Task</Text>
       </View>
       <View style={styles.main}>
-      <Text style={styles.inputLabel}>O que tem para ser feito?</Text>
+        <Text style={styles.inputLabel}>O que tem para ser feito?</Text>
         <StyledInput set={setTitulo} placeHolder='Insira a tarefa aqui' />
         <Text style={styles.inputLabel}>Adicionar a lista</Text>
         <View style={styles.listaInput}>
-        <Picker dropdownIconColor={'#ffff'} style={styles.picker} selectedValue={lista} onValueChange={(itemValue) => setLista(itemValue)}>
-          {gruposItem}
-        </Picker>
-        <IconList name="playlist-plus" size={25} color={"#ffff"} onPress={()=> setModalVisible(true) } />
+          <Picker dropdownIconColor={'#ffff'} style={styles.picker} selectedValue={lista} onValueChange={(itemValue) => setLista(itemValue)}>
+            {gruposItem}
+          </Picker>
+          <IconList name="playlist-plus" size={25} color={"#ffff"} onPress={() => setModalVisible(true)} />
         </View>
         <Modal animationType="fade" transparent={true} visible={modalVisible}>
-        <ModalConteudo inputLabel={styles.inputLabel}set={setLista} fechar={() => setModalVisible(false)} add={()=>{[addList(), setModalVisible(false)]}}/>
+          <ModalConteudo inputLabel={styles.inputLabel} set={setLista} fechar={() => setModalVisible(false)} add={() => { [addList(), setModalVisible(false)] }} />
         </Modal>
       </View>
-      <AbsoluteButton func={addTask} navigate={'Home'} simbol={<Icon name="check" size={25} />} />
+      <AbsoluteButton func={addTask} simbol={<Icon name="check" size={25} />} />
     </SafeAreaView>
   );
 }
@@ -123,19 +126,19 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     width: "90%"
   },
-  listaInput:{
-    width: '100%', 
-    display: 'flex', 
-    flexDirection: 'row', 
+  listaInput: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
     alignItems: 'center'
   },
   inputLabel: {
-    color:'white',
-    margin:0,
-    marginTop:50,
-    fontWeight:'Bold',
-    marginBottom:10,
-    fontSize:20,
+    color: 'white',
+    margin: 0,
+    marginTop: 50,
+    fontWeight: 'Bold',
+    marginBottom: 10,
+    fontSize: 20,
   }
 
 
