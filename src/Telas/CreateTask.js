@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import StyledInput from '../componentes/styledTextInput'
 import AbsoluteButton from '../componentes/absoluteButton';
 import tasksList from '../../Tasks.service'
-import { grupos } from '../componentes/dropdown'
+import { grupos } from '../Telas/Home'
 import { Picker, PickerIOS } from '@react-native-picker/picker';
 import ModalConteudo from '../componentes/modal'
 
@@ -64,6 +64,7 @@ headers: {
 
 
   const navigation = useNavigation();
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />

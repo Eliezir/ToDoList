@@ -4,39 +4,15 @@ import { Dropdown } from 'react-native-element-dropdown';
 
 
 export const grupos = [
-
+  { key:1 ,label: 'Todas as listas', value: 'Todas as listas' },
 ];
 
-const setGrupos = () =>{
-  var requestOptions = {
-    method: 'GET',
-    redirect: 'follow'
-  };
-  fetch("http://localhost:3000/tasks", requestOptions)
-    .then(response => response.json())
-    .then(result => result.map((task)=>{
-      grupos.forEach((grupo)=>{
-        console.log("teste")
-        if(grupo.label == task.grupo){
-          console.log('igual')
-          return
-        }
-        grupos.push({
-          key:grupos.length, label:task.grupo, value:task.grupo
-        })
-      })
-    }))
-    .catch(error => console.log('error', error))
-}
+
 
 
 export default function DropdownComponent (props){
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  useEffect(()=>{
-    setGrupos();
-    console.log(grupos)
-  },[])
   return (
     <View style={styles.container}>
  
@@ -46,7 +22,7 @@ export default function DropdownComponent (props){
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
-        data={grupos}
+        data={props.data}
         search
         maxHeight={300}
         labelField="label"
