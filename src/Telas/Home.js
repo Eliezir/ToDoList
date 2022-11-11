@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, TextInput, View, SafeAreaView, StatusBar, FlatList, } from 'react-native';
+import { StyleSheet, TextInput, View, SafeAreaView, StatusBar, FlatList, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 /* import tasksList from '../../Tasks.service' */
@@ -22,6 +22,8 @@ export default function Home() {
   const [header, setHeader] = useState("Home")
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState(false)
+
+  const [value, setValue] = useState();
 
 /* Crud */
   const updateTask = (task) => {
@@ -48,21 +50,24 @@ export default function Home() {
        .then()
       .catch(error => console.log('error', error));
      setLoadTask(loadTask += 1)  
-    console.log(tasks)
 }
-  useEffect(() => {
+
+  async function getTask (){
     var requestOptions = {
       method: 'GET',
       redirect: 'follow'
     };
-    fetch("http://localhost:3000/tasks", requestOptions)
+    await fetch("http://localhost:3000/tasks", requestOptions)
       .then(response => response.json())
       .then(result => {
         tasksList = [...result];
         setTasks([...result])
       })
       .catch(error => console.log('error', error))
-  }, [loadTask])
+      if (filter == true) {filterList(filtro)}
+  }
+
+  useEffect(() => {getTask()}, [loadTask])
 
  /*  Atualiza a pagina quando trocar da pagina de criar para home */
   const isFocused = useIsFocused();
@@ -116,17 +121,17 @@ export default function Home() {
     updateTask(item.id)
     var index = tasksList.map(g => g.titulo).indexOf(item.titulo)
     let deletedGroup = tasksList[index].grupo
-    setTimeout(() => { deleteTask(item.id)
-      if (filter == true) {
-        filterList(filtro)
-      }
-    },1000)
+    setTimeout(() => { deleteTask(item.id)},1000)
     setTimeout(() => {  
     const teste = tasksList.some((task) => {
       return task.grupo == deletedGroup
     })
     if (!teste) {
       grupos.splice(grupos.map(g => g.label).indexOf(deletedGroup), 1)
+      if (filter == true) {
+        filterList('Todas as listas')
+        setValue("Todas as listas")
+    }
     }
   }, 2000)
   }
@@ -146,7 +151,7 @@ tasksList.map((task) => {
     <SafeAreaView style={styles.container}>
       <StatusBar />
       <View style={[styles.header, { display: header == "Home" ? 'flex' : 'none', justifyContent: "space-between", }]}>
-        <Dropdown function={(item) => filterList(item)} data={grupos} />
+        <Dropdown value={value} function={(item) => filterList(item)} data={grupos}/>
         <View style={{ flexDirection: "row" }}>
           <Icon name="search" size={20} color={"#ffff"} style={styles.headerIcon} onPress={() => setHeader("Search")} />
         </View>

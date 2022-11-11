@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, SafeAreaView, StatusBar, View, Text, Modal } from 'react-native';
+import { StyleSheet, SafeAreaView, StatusBar, View, Text, Modal,  } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import IconList from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,7 @@ import tasksList from '../../Tasks.service'
 import { grupos } from '../Telas/Home'
 import { Picker, PickerIOS } from '@react-native-picker/picker';
 import ModalConteudo from '../componentes/modal'
+
 
 export default function CreateTask() {
   const navigation = useNavigation();
@@ -80,7 +81,7 @@ export default function CreateTask() {
         <StyledInput set={setTitulo} placeHolder='Insira a tarefa aqui' />
         <Text style={styles.inputLabel}>Adicionar a lista</Text>
         <View style={styles.listaInput}>
-          <Picker dropdownIconColor={'#ffff'} style={styles.picker} selectedValue={lista} onValueChange={(itemValue) => setLista(itemValue)}>
+          <Picker theme={'dark'} dropdownIconColor={'#ffff'} style={styles.picker} selectedValue={lista} onValueChange={(itemValue) => setLista(itemValue)}>
             {gruposItem}
           </Picker>
           <IconList name="playlist-plus" size={25} color={"#ffff"} onPress={() => setModalVisible(true)} />
@@ -90,6 +91,7 @@ export default function CreateTask() {
         </Modal>
       </View>
       <AbsoluteButton func={addTask} simbol={<Icon name="check" size={25} />} />
+
     </SafeAreaView>
   );
 }

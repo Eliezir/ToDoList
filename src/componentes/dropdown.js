@@ -29,7 +29,7 @@ export default function DropdownComponent (props){
         valueField="value"
         placeholder={!isFocus ? 'Todas as listas' : '...'}
         searchPlaceholder="Pesquisar..."
-        value={value}
+        value={props.value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
         onChange={item => {setValue(item.value);setIsFocus(false);props.function(item.value)
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   selectedTextStyle: {
-    color:'white',
+    color:'#fff',
     fontSize: 16,
   },
   iconStyle: {

@@ -7,22 +7,16 @@
       "grupo": "ENEM"
     },
     {
+      "id": 2,
       "status": "Active",
-      "titulo": "teste",
-      "grupo": "teste",
-      "id": 2
+      "titulo": "Estudar flatList",
+      "grupo": "Monitoria"
     },
     {
       "status": "Active",
-      "titulo": "teste123",
-      "grupo": "teste",
+      "titulo": "Teste",
+      "grupo": "ENEM",
       "id": 4
-    },
-    {
-      "status": "Active",
-      "titulo": "teste312",
-      "grupo": "4545454",
-      "id": 5
     }
   ]
 }
